@@ -1,8 +1,8 @@
 CXXFLAGS = -O3 -std=c++11 -Wall 
+CFLAGS   = -O3 -Wall
 
-testingmlp: testingmlp.o generated.o
+testingmlp: testingmlp.o generated.o page-info.o
 	$(CXX) $(CXXFLAGS) -o $@ $^
-
 
 ifneq ($(GENERATE), 0)
 generated.cpp : gen.py
@@ -10,7 +10,14 @@ generated.cpp : gen.py
 endif
 
 %.o : %.cpp
-	$(CXX) $(CXXFLAGS) -c $^
+	$(CXX) $(CXXFLAGS) -c $<
+
+%.o : %.c
+	$(CC) $(CFLAGS) -c $<
+
+page-info.o : page-info.h
+
+generated.o testingmlp.o : common.hpp
 
 test: testingmlp
 	./testingmlp
