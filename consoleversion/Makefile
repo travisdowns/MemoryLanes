@@ -1,6 +1,10 @@
 CXXFLAGS = -O3 -std=c++11 -Wall 
 CFLAGS   = -O3 -Wall
 
+.PHONY = clean test
+
+.DELETE_ON_ERROR:
+
 testingmlp: testingmlp.o generated.o page-info.o
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
